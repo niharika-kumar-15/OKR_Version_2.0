@@ -100,4 +100,27 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+
+
+
+    @PatchMapping("/{userId}/role")
+    public ResponseEntity<User> updateUserRole(@PathVariable Long userId, @RequestParam String role) {
+        // Retrieve the user by their ID
+        User user = userService.getUserById(userId);
+
+        if (user == null) {
+            // Return a 404 response if the user is not found
+            return ResponseEntity.notFound().build();
+        }
+
+        // Update the user's role
+        user.setRole(role);
+
+        // Save the updated user back to the database
+        User updatedUser = userService.updateUser(user);
+
+        // Return a 200 response with the updated user
+        return ResponseEntity.ok(updatedUser);
+    }
+
 }

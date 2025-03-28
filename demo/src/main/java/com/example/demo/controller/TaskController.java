@@ -35,4 +35,17 @@ public class TaskController {
     }
 
 
+    @GetMapping("/getTasks/{objectiveId}")
+    public ResponseEntity<List<Task>> getTasksByObjective(@PathVariable Long objectiveId){
+        List<Task> tasks = taskService.getTasksByeObjective(objectiveId);
+        return ResponseEntity.ok(tasks);
+    }
+
+
+    @GetMapping("getSubtasks/{parentTaskId}")
+    public ResponseEntity<List<Task>> getSubtasksByTask(@PathVariable Long parentTaskId){
+        List<Task> subTasks = taskService.getSubtasksByTask(parentTaskId);
+        return  ResponseEntity.ok(subTasks);
+    }
+
 }

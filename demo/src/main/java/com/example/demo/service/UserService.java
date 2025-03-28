@@ -108,4 +108,10 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+
+
+    public User updateUser(User user) {
+        return userRepository.save(user);  // Assuming you're using JPA and userRepository is a JpaRepository
+    }
 }

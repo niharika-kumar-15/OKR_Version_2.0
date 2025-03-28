@@ -37,4 +37,16 @@ public class TaskService {
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
+
+    public List<Task> getTasksByeObjective(Long objectiveId) {
+        return taskRepository.findByObjectiveId(objectiveId);
+    }
+
+    public long getOverallProgressForTask(Long taskId) {
+        return taskRepository.getOverallProgressForTask(taskId);
+    }
+
+    public List<Task> getSubtasksByTask(Long parentTaskId) {
+        return taskRepository.getSubtasksByTask(parentTaskId);
+    }
 }

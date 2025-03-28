@@ -26,10 +26,11 @@ public class GroupController {
 
     // Create or Update a Group
     @PostMapping
-    public ResponseEntity<Group> createOrUpdateGroup(@RequestBody Group group) {
-        Group savedGroup = groupService.saveOrUpdateGroup(group);
+    public ResponseEntity<Group> createGroup(@RequestBody Group group) {
+        Group savedGroup = groupService.createGroup(group);
         return new ResponseEntity<>(savedGroup, HttpStatus.CREATED);
     }
+
 
     // Get all Groups
     @GetMapping
