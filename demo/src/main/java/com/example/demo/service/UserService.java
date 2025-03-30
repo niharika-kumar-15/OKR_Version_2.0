@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Group;
 import com.example.demo.model.User;
+import com.example.demo.model.UserGroupJoin;
+import com.example.demo.repository.GroupRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,12 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserGroupJoinService userGroupJoinService;
+
+    @Autowired
+    private GroupRepository groupRepository;
 
     public User createUser(String username, String designation, long managerId, String email) {
 
@@ -114,4 +124,15 @@ public class UserService {
     public User updateUser(User user) {
         return userRepository.save(user);  // Assuming you're using JPA and userRepository is a JpaRepository
     }
+
+    public List<Group> getAllTeamsOfUser(Long userId) {
+        List<UserGroupJoin> userGroupJoins = userGroupJoinService.getUserGroupJoinsByUserId(userId);
+        List<Group> groups = new ArrayList<>();
+        for (UserGroupJoin userGroupJoin : userGroupJoins) {
+            Optional<Group> optionalGroup = groupRepository.findById(userGroupJoin.getGroupId());
+            optionalGroup.ifPresent(groups::add);
+        }
+        return groups;
+    }
+
 }

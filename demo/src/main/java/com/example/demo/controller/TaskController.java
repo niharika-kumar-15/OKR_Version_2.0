@@ -48,4 +48,12 @@ public class TaskController {
         return  ResponseEntity.ok(subTasks);
     }
 
+
+    @GetMapping("/all/subtasks")
+    public ResponseEntity<List<Task>> getAllSubTasks() {
+        List<Task> tasks = taskService.getAllSubTasks();  // Calls the service method to fetch all tasks
+        return ResponseEntity.ok(tasks);
+    }
+
+
 }

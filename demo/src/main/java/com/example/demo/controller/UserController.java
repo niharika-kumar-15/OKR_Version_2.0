@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Group;
 import com.example.demo.model.Objective;
 import com.example.demo.model.User;
 import com.example.demo.service.ObjectiveService;
@@ -123,4 +124,10 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+
+    @GetMapping("/getAllTeams/{userId}")
+    public ResponseEntity<List<Group>> getAllTeamsOfUser(@PathVariable  Long userId){
+        List<Group> allTeams = userService.getAllTeamsOfUser(userId);
+        return ResponseEntity.ok(allTeams);
+    }
 }

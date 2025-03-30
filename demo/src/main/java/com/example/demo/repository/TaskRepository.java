@@ -18,4 +18,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         @Query("SELECT t FROM Task t WHERE t.parentTaskId = :parentTaskId")
         List<Task> getSubtasksByTask(@Param("parentTaskId") Long parentTaskId);
 
+        @Query("SELECT t FROM Task t WHERE t.parentTaskId IS NOT NULL")
+         List<Task> getAllSubTasks();
+
 }

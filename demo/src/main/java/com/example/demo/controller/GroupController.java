@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Group;
+import com.example.demo.model.User;
 import com.example.demo.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,5 +52,11 @@ public class GroupController {
     public ResponseEntity<Void> deleteGroup(@PathVariable Long groupId) {
         groupService.deleteGroup(groupId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/members/{groupId}")
+    public ResponseEntity<List<User>> getAllMembersOfTeam(@PathVariable Long groupId){
+       List<User> users =  groupService.getAllMembersOfGroup(groupId);
+       return  ResponseEntity.ok(users);
     }
 }

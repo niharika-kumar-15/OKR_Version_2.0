@@ -49,4 +49,8 @@ public class TaskService {
     public List<Task> getSubtasksByTask(Long parentTaskId) {
         return taskRepository.getSubtasksByTask(parentTaskId);
     }
+
+    public List<Task> getAllSubTasks() {
+        return taskRepository.getAllSubTasks();
+    }
 }
