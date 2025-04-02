@@ -53,4 +53,36 @@ public class TaskService {
     public List<Task> getAllSubTasks() {
         return taskRepository.getAllSubTasks();
     }
+
+
+
+    // adding each progress
+    public Task updateTaskProgress(Long taskId, Integer progress) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+        task.setProgress(progress);
+        return taskRepository.save(task);
+    }
+    public Integer calculateOverallProgress(Long objectiveId) {
+        // Query the repository to get the tasks for the given objective
+        List<Task> tasks = taskRepository.findByObjectiveId(objectiveId);
+
+        // Calculate the sum of progress values
+        int totalProgress = tasks.stream().mapToInt(Task::getProgress).sum();
+
+        // Calculate the average progress (totalProgress divided by the number of tasks)
+        int taskCount = tasks.size();
+
+        // If there are tasks, calculate the average; otherwise, return 0
+        if (taskCount > 0) {
+            return totalProgress / taskCount;  // Integer division
+        } else {
+            return 0;
+        }
+    }
+
+
+
+
+
 }

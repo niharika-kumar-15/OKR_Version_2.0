@@ -27,4 +27,5 @@ public class ObjectiveController {
     public ResponseEntity<List<Objective>> getAllObjectives() {
         return ResponseEntity.ok(objectiveService.getAllObjectives());
     }
+
 }

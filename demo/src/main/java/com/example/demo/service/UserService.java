@@ -25,7 +25,7 @@ public class UserService {
     @Autowired
     private GroupRepository groupRepository;
 
-    public User createUser(String username, String designation, long managerId, String email) {
+    public User createUser(String username, String designation, long managerId, String email , String role) {
 
         User existingUser = userRepository.findByUsername(username);
 
@@ -40,6 +40,7 @@ public class UserService {
         newUser.setEmail(email);
         newUser.setObjectives(new ArrayList<>());  // Empty list at the start
         newUser.setGroupId(null);
+        newUser.setRole(role);
         return userRepository.save(newUser);
     }
 

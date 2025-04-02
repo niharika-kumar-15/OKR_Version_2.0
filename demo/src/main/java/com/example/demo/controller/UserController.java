@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -76,7 +77,8 @@ public class UserController {
                     user.getUsername(),
                     user.getDesignation(),
                     user.getManagerId(), // Manager name is passed as managerId
-                    user.getEmail()
+                    user.getEmail(),
+                    user.getRole()
             );
 
 
@@ -108,15 +110,12 @@ public class UserController {
     public ResponseEntity<User> updateUserRole(@PathVariable Long userId, @RequestParam String role) {
         // Retrieve the user by their ID
         User user = userService.getUserById(userId);
-
         if (user == null) {
             // Return a 404 response if the user is not found
             return ResponseEntity.notFound().build();
         }
-
         // Update the user's role
         user.setRole(role);
-
         // Save the updated user back to the database
         User updatedUser = userService.updateUser(user);
 
@@ -129,5 +128,41 @@ public class UserController {
     public ResponseEntity<List<Group>> getAllTeamsOfUser(@PathVariable  Long userId){
         List<Group> allTeams = userService.getAllTeamsOfUser(userId);
         return ResponseEntity.ok(allTeams);
+    }
+
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity<User> patchUser(
+            @PathVariable Long userId,
+            @RequestBody Map<String, Object> updates) {
+        // Retrieve the existing user
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Apply the updates
+        if (updates.containsKey("username")) {
+            user.setUsername((String) updates.get("username"));
+        }
+        if (updates.containsKey("groupId")) {
+            user.setGroupId(Long.valueOf(updates.get("groupId").toString()));
+        }
+        if (updates.containsKey("managerId")) {
+            user.setManagerId(Long.valueOf(updates.get("managerId").toString()));
+        }
+        if (updates.containsKey("designation")) {
+            user.setDesignation((String) updates.get("designation"));
+        }
+        if (updates.containsKey("role")) {
+            user.setRole((String) updates.get("role"));
+        }
+        if (updates.containsKey("email")) {
+            user.setEmail((String) updates.get("email"));
+        }
+
+        // Save the updated user
+        User updatedUser = userService.updateUser(user);
+        return ResponseEntity.ok(updatedUser);
     }
 }

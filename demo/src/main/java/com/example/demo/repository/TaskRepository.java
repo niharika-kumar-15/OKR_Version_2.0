@@ -21,4 +21,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         @Query("SELECT t FROM Task t WHERE t.parentTaskId IS NOT NULL")
          List<Task> getAllSubTasks();
 
+
+
+    @Query("SELECT COALESCE(SUM(t.progress), 0), COUNT(t) FROM Task t WHERE t.objectiveId = :objectiveId")
+    Object[] getOverallProgressByObjective(@Param("objectiveId") Long objectiveId);
+
+
 }

@@ -55,5 +55,19 @@ public class TaskController {
         return ResponseEntity.ok(tasks);
     }
 
+    //adding progress for each task
+    @PutMapping("/{taskId}/progress/{progress}")
+    public ResponseEntity<Task> updateTaskProgress(@PathVariable Long taskId, @PathVariable Integer progress) {
+        Task updatedTask = taskService.updateTaskProgress(taskId, progress);
+        return ResponseEntity.ok(updatedTask);
+    }
+    // getting the overall progress
+    @GetMapping("/objective/{objectiveId}/progress")
+    public ResponseEntity<Integer> getOverallProgress(@PathVariable Long objectiveId) {
+        Integer overallProgress = taskService.calculateOverallProgress(objectiveId);
+        return ResponseEntity.ok(overallProgress);
+    }
+
+
 
 }

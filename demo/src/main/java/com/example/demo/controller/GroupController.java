@@ -19,7 +19,6 @@ import java.util.Optional;
 public class GroupController {
 
     private final GroupService groupService;
-
     @Autowired
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
